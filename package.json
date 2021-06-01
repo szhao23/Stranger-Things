@@ -12,10 +12,6 @@
   },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/szhao23/Netlify-Stranger-Things/issues"
-  },
-  "homepage": "https://github.com/szhao23/Netlify-Stranger-Things#readme",
   "dependencies": {
     "axios": "^0.21.1",
     "react": "^17.0.2",

@@ -35,10 +35,11 @@ export default function Registration() {
         user)
         console.log('Here is the response object: ', response);
 
-        // userToken = response.data.data.token
-        // localStorage.setItem('token', userToken);
-        
-        // console.log('Stored token: ');
+        const userToken = response.data.data.token
+        const setToken = userToken;
+        localStorage.setItem('token', setToken)
+
+        console.log('Stored token: ', setToken);
     };
     
 
