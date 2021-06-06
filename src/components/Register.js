@@ -6,6 +6,7 @@ export default function Registration() {
     const [passwordReg, setPasswordReg] = useState("");
 
     const [loginStatus, setLoginStatus] = useState(""); 
+    
     const [token, setToken] = useState("");
     
     const user = {user: 
@@ -14,33 +15,21 @@ export default function Registration() {
             password: passwordReg,
         }
     }
+
     const register = async () => {
-        console.log(usernameReg, passwordReg);
-        // Axios(
-        //     "https://strangers-things.herokuapp.com/api/2104-uic-web-ft/users/register", {
-        //         method: "POST",
-        //         headers: {
-        //             'Content-Type': 'application/json'
-        //         },
-        //         body: JSON.stringify({
-        //             user: {
-        //                 username: usernameReg,
-        //                 password: passwordReg,
-        //             }
-        //         })
-        //     }).then(response => response.json()).then(result => {
-        //         console.log(result);
-        //     }).catch(console.error);
-        let response = await Axios.post("https://strangers-things.herokuapp.com/api/2104-uic-web-ft/users/register", 
-        user)
-        console.log('Here is the response object: ', response);
+      // Show the Username and Password that is created through registration
+      console.log(usernameReg, passwordReg);
+    
+      let response = await Axios.post("https://strangers-things.herokuapp.com/api/2104-uic-web-ft/users/register", user);
+      // Display data inside Response Object
+      console.log('This is the response object: ', response);
 
-        const userToken = response.data.data.token
-        const setToken = userToken;
-        localStorage.setItem('token', setToken)
-
-        console.log('Stored token: ', setToken);
-    };
+      const setToken = response.data.data.token
+      localStorage.setItem('token', setToken)
+      // Display Stored Token
+      console.log('Stored token: ', setToken);
+  };
+  
     
 
 return (
@@ -48,16 +37,12 @@ return (
       <h1>Registration</h1><br/><br/>
       <div className="registration">
         <label>Username</label> <br/>
-        <input
-          type="text"
-          onChange={(e) => {
+        <input type="text" placeholder="username" onChange={(e) => {
             setUsernameReg(e.target.value);
           }}
         />
         <br/><label>Password</label><br/>
-        <input
-          type="text"
-          onChange={(e) => {
+        <input type="text" placeholder="password" onChange={(e) => {
             setPasswordReg(e.target.value);
           }}
         />
