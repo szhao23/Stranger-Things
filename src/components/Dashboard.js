@@ -54,15 +54,18 @@ function Dashboard(props) {
 }
 
   return (
-    // <div> 
-    //   <h3>Welcome User!</h3><br/><br/>
-    //   <div className= "Logout">
-    //       <input type="button" onClick={handleLogout} value="Logout" />
-    //   </div>
-    <div className= "Show Info"> <h2>Show My Notifications</h2> <br/><br/>
-      <input type="button" onClick={() => getInformation()} value= "Show Info"/>
-      {/* <text>${this.res.data.data.posts}</text> */}
-    </div> 
+    <div> 
+      <div className= "Show Info"> <h2>Show My Notifications</h2>
+        <br></br>
+        <input type="button" onClick={() => getInformation()} value= "Show Info"/>
+        </div>
+      <br></br>
+      <h3>Welcome User!</h3>
+      <br></br>
+      <div className= "Logout">
+          <input type="button" onClick={handleLogout} value="Logout" />
+      </div>
+      </div> 
   );
 }
  
