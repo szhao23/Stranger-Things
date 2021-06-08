@@ -10,6 +10,7 @@ function renderPosts() {
     const [author, setAuthor] = useState('');
     const [location, setLocation] = useState('');
     const [willDeliver, setWillDeliver] = useState('');
+    const [editPosts, setEditPosts] = useState([]);
 
 
     const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGJjYzQ1MDRmZGM1MDAwMTcxYTJlY2MiLCJ1c2VybmFtZSI6ImhleXRoZXJlMSIsImlhdCI6MTYyMjk4Mzc2MH0.3f_xMXOTADsFp83nvJ4HqvsGzlEQCdIddPyAfXHqWCw'
@@ -70,6 +71,12 @@ function renderPosts() {
         return data
 }
 
+    // Unfinished Stuff:
+    // editPost()
+    // deletePost()
+    // Could not finish editPost() because the id kept being undefined 
+    // in the fetch link API so I couldn't move forward
+
     const editPost = async () => {
         localStorage.getItem('token');
 
@@ -81,9 +88,15 @@ function renderPosts() {
             'Authorization': `Bearer ${accessToken}`
         },
     })
+    
+        // Could not get the id as it kept being undefined
         const data = await res.json()
-        const id = data.data.posts._id
+        const id = data.data.posts
+
+        setEditPosts(id);
         console.log('data: ', data)
+        console.log('id: ', id)
+        console.log('editPosts: ', editPosts)
 
         let response = await fetch(`https://strangers-things.herokuapp.com/api/2104-uic-web-ft/posts/${id}`, 
         {
