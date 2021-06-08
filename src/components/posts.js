@@ -2,11 +2,17 @@ import React, {useState} from 'react';
 import Axios from 'axios';
 
 
-
 function renderPosts() {
     const [posts, setPosts] = useState([]);
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+    const [price, setPrice] = useState('');
+    const [author, setAuthor] = useState('');
+    const [location, setLocation] = useState('');
+    const [willDeliver, setWillDeliver] = useState('');
 
-    // const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGJjYzQ1MDRmZGM1MDAwMTcxYTJlY2MiLCJ1c2VybmFtZSI6ImhleXRoZXJlMSIsImlhdCI6MTYyMjk4Mzc2MH0.3f_xMXOTADsFp83nvJ4HqvsGzlEQCdIddPyAfXHqWCw'
+
+    const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGJjYzQ1MDRmZGM1MDAwMTcxYTJlY2MiLCJ1c2VybmFtZSI6ImhleXRoZXJlMSIsImlhdCI6MTYyMjk4Mzc2MH0.3f_xMXOTADsFp83nvJ4HqvsGzlEQCdIddPyAfXHqWCw'
 
     // Axios.interceptors.request.use(
     //     config => {
@@ -17,7 +23,86 @@ function renderPosts() {
     //       return Promise.reject(error);
     //     }
     //   );
+
+    const userPost = {
+        title: title,
+        description: description,
+        price: price,
+        author: author,
+        location: location,
+        willDeliver: willDeliver,
+    }
+
+    // console.log('Title: ', title)
+    // console.log('Description: ', description)
+    // console.log('Price: ', price)
+    // console.log('Author: ', author)
+    // console.log('Location: ', location)
+    // console.log('willDeliver: ', willDeliver)
+
  
+    // title, description, price, author.username, location, willDeliver
+
+    // const addPost = async () => {
+    //         localStorage.getItem('token');
+    //         let response = await Axios.post("https://strangers-things.herokuapp.com/api/2104-uic-web-ft/posts", userPost, axiosConfig)
+    //         console.log('Add Post Request: ', response);
+
+    //         console.log('userPosts: ', userPost)
+    // }
+
+    const addPost = async () => {
+        localStorage.getItem('token');
+        let response = await fetch("https://strangers-things.herokuapp.com/api/2104-uic-web-ft/posts", 
+        {
+         method: "POST",
+         headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`,
+            },
+            body: JSON.stringify({
+                post: userPost
+            })
+        })
+
+        const data = await response.json()
+        console.log('Data: ', data)
+        return data
+}
+
+    const editPost = async () => {
+        localStorage.getItem('token');
+
+        let res = await fetch(`https://strangers-things.herokuapp.com/api/2104-uic-web-ft/posts/`, 
+        {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`
+        },
+    })
+        const data = await res.json()
+        const id = data.data.posts._id
+        console.log('data: ', data)
+
+        let response = await fetch(`https://strangers-things.herokuapp.com/api/2104-uic-web-ft/posts/${id}`, 
+        {
+        method: "PATCH",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`
+        },
+        body: JSON.stringify({
+            post: userPost
+        })
+    })
+        // const data = await response.json()
+        // console.log('Edit postData: ', data)
+
+        // const id = data.data.posts._id
+        // console.log('_id: ', id)
+}
+
     const getPost = async () => {
             localStorage.getItem('token');
             let res = await Axios.get("https://strangers-things.herokuapp.com/api/2104-uic-web-ft/posts") 
@@ -29,29 +114,11 @@ function renderPosts() {
             setPosts(results);
             console.log('Here', posts);
         }
-
-        //posts(array of objects)
-        //  _id(String)
-        //  author(object)
-        //  description(String)
-        //  isAuthor(boolean)
-        //  location(string)
-        //  message(array of message objects)
-        //      fromUser(object)
-        //          _id(string)
-        //          username(string)
-        //      content(string)
-        //  price(string)
-        //  title(string)
-        //  willDeliver(boolean)
-        //  active(boolean)
-        //  createdAt(String)
-        //  updatedAt(string)
-    
+  
     return (
         <main>
             <div className= "Post Results"> 
-                <form action='/posts' method="get"> 
+                <form> 
                 <label htmlFor="header-search">
                     <br></br>
                     <span className="visually-hidden">Create Posts: &nbsp; </span>
@@ -61,10 +128,68 @@ function renderPosts() {
                     <input
                         type="text"
                         id="header-search"
-                        placeholder="Create Posts Here"
-                        name="post" 
+                        placeholder="Post Title"
+                        name="title" 
+                        onChange ={(e) => {
+                            setTitle(e.target.value);
+                        }}
                     />
-                <button type="submit">Add Post</button></form> <br/><br/>
+                    <br></br>
+                    <input
+                        type="text"
+                        id="header-search"
+                        placeholder="Post Description"
+                        name="description" 
+                        onChange ={(e) => {
+                            setDescription(e.target.value);
+                        }}
+                    />
+                    <br></br>
+                    <input
+                        type="text"
+                        id="header-search"
+                        placeholder="Post Price"
+                        name="price"
+                        onChange ={(e) => {
+                            setPrice(e.target.value);
+                        }} 
+                    />
+                    <br></br>
+                    <input
+                        type="text"
+                        id="header-search"
+                        placeholder="Post Author"
+                        name="author" 
+                        onChange ={(e) => {
+                            setAuthor(e.target.value);
+                        }}
+                    />
+                    <br></br>
+                    <input
+                        type="text"
+                        id="header-search"
+                        placeholder="Post Location"
+                        name="location" 
+                        onChange ={(e) => {
+                            setLocation(e.target.value);
+                        }}
+                    />
+                    <br></br>
+                    <input
+                        type="text"
+                        id="header-search"
+                        placeholder="willDeliver: true or false"
+                        name="willDeliver" 
+                        onChange ={(e) => {
+                            setWillDeliver(e.target.value);
+                        }}
+                    />
+                    <br></br>
+                    <br></br>
+                    <input type="button" onClick={() => addPost()} value= "Add Posts"/>
+                    <input type="button" onClick={() => editPost()} value= "Edit Posts"/>
+                </form> 
+                <br/><br/>
             </div>
 
             <div>
@@ -77,6 +202,7 @@ function renderPosts() {
                         <p> Author: {post.author.username}</p>
                         <p> Location: {post.location}</p>
                         <p> WillDeliver: {post.willDeliver}</p>
+                        <br></br>
                     </div>
                 ))}
                 <input type="button" onClick={() => getPost()} value= "Show Posts"/>
