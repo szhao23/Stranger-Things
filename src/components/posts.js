@@ -98,17 +98,17 @@ function renderPosts() {
         console.log('id: ', id)
         console.log('editPosts: ', editPosts)
 
-        let response = await fetch(`https://strangers-things.herokuapp.com/api/2104-uic-web-ft/posts/${id}`, 
-        {
-        method: "PATCH",
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${accessToken}`
-        },
-        body: JSON.stringify({
-            post: userPost
-        })
-    })
+    //     let response = await fetch(`https://strangers-things.herokuapp.com/api/2104-uic-web-ft/posts/${id}`, 
+    //     {
+    //     method: "PATCH",
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //         'Authorization': `Bearer ${accessToken}`
+    //     },
+    //     body: JSON.stringify({
+    //         post: userPost
+    //     })
+    // })
         // const data = await response.json()
         // console.log('Edit postData: ', data)
 
